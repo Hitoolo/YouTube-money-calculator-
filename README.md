@@ -3,7 +3,7 @@
 A clean, white-first YouTube revenue calculator for creators. Estimate AdSense, sponsorship, affiliate and membership income. Client-side, zero dependencies, ideal for GitHub Pages.
 
 **Live demo (replace):**  
-`https://hitoolo.github.io/youtube-money-calculator/`
+`https://hitoolo.github.io/YouTube-money-calculator/`
 
 ---
 
@@ -33,6 +33,6 @@ git init
 git add .
 git commit -m "Initial commit - Hitoolo revenue calculator"
 git branch -M main
-git remote add origin https://github.com/hitoolo/youtube-money-calculator.git
+git remote add origin https://hitoolo.github.io/YouTube-money-calculator.git
 git push -u origin main
 # Then enable GitHub Pages in repo settings (branch: main / root)
