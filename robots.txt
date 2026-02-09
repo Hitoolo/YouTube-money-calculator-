@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hitoolo.github.io/youtube-money-calculator/sitemap.xml
