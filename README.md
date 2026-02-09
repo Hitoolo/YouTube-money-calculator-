@@ -1,31 +1,38 @@
-# Pro YouTube Revenue Studio
+# Hitoolo — YouTube Money Calculator
 
-A small, client-side YouTube revenue calculator that estimates AdSense and sponsorship earnings from views, RPM and timeframe. Built for creators who want fast, realistic revenue scenarios.
+A clean, white-first YouTube revenue calculator for creators. Estimate AdSense, sponsorship, affiliate and membership income. Client-side, zero dependencies, ideal for GitHub Pages.
 
-## Features
-- Estimate AdSense earnings using RPM (net publisher RPM)
-- Estimate sponsorship potential using CPM per 1,000 views
-- Low / current / optimized scenario bars
-- Toggle for long-form vs shorts defaults
-- Mobile-friendly and zero-dependency (pure HTML/CSS/JS)
+**Live demo (replace):**  
+`https://<YOUR-GITHUB-USER>.github.io/<REPO-NAME>/`
 
-## How to use
-1. Change `Traffic Volume` (views) and `Timeframe` (Single video / Daily / Monthly).  
-2. Adjust `AdSense RPM` and `Sponsorship CPM`.  
-3. Read the summary, split by AdSense and sponsors. Bars show low/current/optimized scenarios.
+---
 
-## Deploy on GitHub Pages (fast)
-1. Create a new public repository on GitHub.
-2. Add `index.html` and the `assets/` folder.
-3. Commit and push.
-4. In repo `Settings` → `Pages` → select `main` branch and `/ (root)` → Save.
-5. Visit `https://<your-username>.github.io/<repo-name>/` after a minute.
+## What this repo contains
+- `index.html` — main tool (UI + logic + charts)
+- `README.md` — this file
+- `LICENSE` — MIT license
+- `sitemap.xml` — basic sitemap for search engines
+- `robots.txt` — crawl rules
+- `.nojekyll` — prevents Jekyll processing (optional)
+- `assets/` — images (favicon, social preview)
 
-## License
-MIT — see LICENSE
+---
 
-## Customization ideas
-- Save presets to `localStorage`
-- Add CSV export or “share” link with parameters in URL
-- Add currency selector and localization
-- Add GA4 or Plausible analytics
+## Quick deploy (GitHub Pages)
+
+### Using GitHub web UI (fast)
+1. Create a new **public** repository on GitHub, name it (example): `hitoolo-youtube-calculator`.  
+2. Upload `index.html`, `README.md`, `LICENSE`, `sitemap.xml`, `robots.txt`, `.nojekyll`, plus an `assets/` folder containing `favicon.ico` and `social.png`.  
+3. Commit and push.  
+4. In the repo: **Settings → Pages** → Source: choose branch `main` (or `master`) and folder `/ (root)` → Save.  
+5. After ~30–60 seconds open: `https://<YOUR-GITHUB-USER>.github.io/<REPO-NAME>/`
+
+### Using Git (CLI)
+```bash
+git init
+git add .
+git commit -m "Initial commit - Hitoolo revenue calculator"
+git branch -M main
+git remote add origin https://github.com/<YOUR-GITHUB-USER>/<REPO-NAME>.git
+git push -u origin main
+# Then enable GitHub Pages in repo settings (branch: main / root)
