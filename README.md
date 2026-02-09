@@ -25,7 +25,7 @@ A clean, white-first YouTube revenue calculator for creators. Estimate AdSense, 
 2. Upload `index.html`, `README.md`, `LICENSE`, `sitemap.xml`, `robots.txt`, `.nojekyll`, plus an `assets/` folder containing `favicon.ico` and `social.png`.  
 3. Commit and push.  
 4. In the repo: **Settings → Pages** → Source: choose branch `main` (or `master`) and folder `/ (root)` → Save.  
-5. After ~30–60 seconds open: `https://<YOUR-GITHUB-USER>.github.io/<REPO-NAME>/`
+5. After ~30–60 seconds open: `https://hitoolo.github.io/youtube-money-calculator/`
 
 ### Using Git (CLI)
 ```bash
@@ -33,6 +33,6 @@ git init
 git add .
 git commit -m "Initial commit - Hitoolo revenue calculator"
 git branch -M main
-git remote add origin https://github.com/<YOUR-GITHUB-USER>/<REPO-NAME>.git
+git remote add origin https://github.com/hitoolo/youtube-money-calculator.git
 git push -u origin main
 # Then enable GitHub Pages in repo settings (branch: main / root)
