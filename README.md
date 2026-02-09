@@ -3,7 +3,7 @@
 A clean, white-first YouTube revenue calculator for creators. Estimate AdSense, sponsorship, affiliate and membership income. Client-side, zero dependencies, ideal for GitHub Pages.
 
 **Live demo (replace):**  
-`https://<YOUR-GITHUB-USER>.github.io/<REPO-NAME>/`
+`https://hitoolo.github.io/youtube-money-calculator/`
 
 ---
 
