@@ -3,11 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hitoolo | YouTube Money Calculator</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Hitoolo | YouTube Money Calculator & Revenue Estimator</title>
+    
+    <meta name="description" content="Calculate your potential YouTube earnings with Hitoolo. Estimate AdSense revenue based on views, RPM, and growth for Long Form videos and Shorts.">
+    <link rel="canonical" href="https://yourusername.github.io/repo-name/">
+    
+    <meta property="og:title" content="Hitoolo | YouTube Money Calculator">
+    <meta property="og:description" content="Free tool to estimate YouTube AdSense revenue, visualize growth, and calculate Shorts vs Long form earnings.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourusername.github.io/repo-name/">
+    <meta property="og:image" content="https://yourusername.github.io/repo-name/og-image.jpg">
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>H</text></svg>">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -20,11 +35,12 @@
                             50: '#eff6ff',
                             100: '#dbeafe',
                             500: '#3b82f6',
-                            600: '#2563eb', // Brand Blue
+                            600: '#2563eb',
                             700: '#1d4ed8',
                             900: '#1e3a8a',
                         },
                         slate: {
+                            500: '#64748b', /* Updated for Contrast */
                             850: '#1e293b',
                         }
                     }
@@ -33,13 +49,35 @@
         }
     </script>
 
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Hitoolo YouTube Calculator",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "A professional calculator to estimate YouTube AdSense revenue based on RPM, Views, and Video types."
+    }
+    </script>
+
     <style>
         body {
             background-color: #f8fafc;
             color: #0f172a;
         }
 
-        /* Custom Range Slider Styling */
+        /* Accessibility: Focus Visible */
+        :focus-visible {
+            outline: 2px solid #2563eb;
+            outline-offset: 2px;
+        }
+
+        /* Custom Range Slider */
         input[type=range] {
             -webkit-appearance: none; 
             width: 100%; 
@@ -71,7 +109,7 @@
             border-radius: 99px;
         }
 
-        /* Number Input cleaner look */
+        /* Input Clean Up */
         input[type=number]::-webkit-inner-spin-button, 
         input[type=number]::-webkit-outer-spin-button { 
             -webkit-appearance: none; 
@@ -95,25 +133,24 @@
             nav, button, select, .no-print { display: none !important; }
             main { padding: 0; max-width: 100%; }
             .card-shadow { box-shadow: none; border: 1px solid #ddd; }
-            .lg\:col-span-5 { display: none; } /* Hide controls on print */
+            .lg\:col-span-5 { display: none; }
             .lg\:col-span-7 { width: 100%; display: block; }
             .lg\:h-screen { height: auto; overflow: visible; }
             canvas { max-height: 300px; }
         }
     </style>
-    <meta name="google-site-verification" content="EwrEwqtdeWIpDL2mNx_vP4KwCY65BoUhfULPupWHIos" />
 </head>
 <body class="min-h-screen flex flex-col">
 
     <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center gap-2">
-                <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center text-white font-extrabold text-xl shadow-lg shadow-primary-500/30">H</div>
-                <span class="text-xl font-bold tracking-tight text-slate-900">Hitoolo</span>
+                <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center text-white font-extrabold text-xl shadow-lg shadow-primary-500/30" aria-hidden="true">H</div>
+                <h1 class="text-xl font-bold tracking-tight text-slate-900">Hitoolo</h1>
             </div>
             
             <div class="flex items-center gap-3">
-                <select id="currencySelect" class="bg-slate-50 border border-slate-300 text-sm font-semibold text-slate-700 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary-500 focus:outline-none transition-all cursor-pointer">
+                <select id="currencySelect" aria-label="Select Currency" class="bg-slate-50 border border-slate-300 text-sm font-semibold text-slate-700 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary-500 focus:outline-none transition-all cursor-pointer">
                     <option value="USD">USD ($)</option>
                     <option value="INR">INR (₹)</option>
                     <option value="EUR">EUR (€)</option>
@@ -121,8 +158,8 @@
                 </select>
                 
                 <div class="relative group">
-                    <button class="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors shadow-sm">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    <button class="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors shadow-sm" aria-haspopup="true">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                         Export
                     </button>
                     <div class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-slate-100 hidden group-hover:block z-50">
@@ -140,8 +177,8 @@
             
             <div class="lg:col-span-5 space-y-6">
                 
-                <div class="bg-white rounded-2xl p-6 card-shadow">
-                    <h2 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-4">Quick Start: Select Niche</h2>
+                <section class="bg-white rounded-2xl p-6 card-shadow" aria-labelledby="niche-heading">
+                    <h2 id="niche-heading" class="text-sm font-bold uppercase tracking-wider text-slate-500 mb-4">Quick Start: Select Niche</h2>
                     <div class="grid grid-cols-3 gap-2">
                         <button onclick="applyPreset('finance')" class="px-3 py-2 text-xs font-semibold rounded-lg bg-slate-50 text-slate-600 border border-slate-200 hover:bg-primary-50 hover:text-primary-700 hover:border-primary-200 transition-all">Finance/Biz</button>
                         <button onclick="applyPreset('tech')" class="px-3 py-2 text-xs font-semibold rounded-lg bg-slate-50 text-slate-600 border border-slate-200 hover:bg-primary-50 hover:text-primary-700 hover:border-primary-200 transition-all">Tech</button>
@@ -150,23 +187,23 @@
                         <button onclick="applyPreset('edu')" class="px-3 py-2 text-xs font-semibold rounded-lg bg-slate-50 text-slate-600 border border-slate-200 hover:bg-primary-50 hover:text-primary-700 hover:border-primary-200 transition-all">Education</button>
                         <button onclick="applyPreset('ent')" class="px-3 py-2 text-xs font-semibold rounded-lg bg-slate-50 text-slate-600 border border-slate-200 hover:bg-primary-50 hover:text-primary-700 hover:border-primary-200 transition-all">Entertainment</button>
                     </div>
-                </div>
+                </section>
 
-                <div class="bg-white rounded-2xl p-6 card-shadow space-y-8">
+                <section class="bg-white rounded-2xl p-6 card-shadow space-y-8" aria-labelledby="params-heading">
                     <div class="flex items-center justify-between mb-2">
-                        <h2 class="text-lg font-bold text-slate-900">Parameters</h2>
-                        <button onclick="resetDefaults()" class="text-xs font-medium text-primary-600 hover:text-primary-800">Reset to Default</button>
+                        <h2 id="params-heading" class="text-lg font-bold text-slate-900">Parameters</h2>
+                        <button onclick="resetDefaults()" class="text-xs font-medium text-primary-600 hover:text-primary-800 focus:outline-none focus:underline">Reset to Default</button>
                     </div>
 
                     <div class="space-y-3">
                         <div class="flex justify-between items-center">
-                            <label class="text-sm font-semibold text-slate-700">Monthly Views</label>
+                            <label for="numViews" class="text-sm font-semibold text-slate-700">Monthly Views</label>
                             <div class="relative">
                                 <input type="number" id="numViews" value="1000000" class="w-32 text-right text-sm font-bold text-slate-900 bg-slate-50 border border-slate-200 rounded px-2 py-1 focus:ring-2 focus:ring-primary-500 outline-none">
                             </div>
                         </div>
-                        <input type="range" id="rangeViews" min="1000" max="10000000" step="1000" value="1000000">
-                        <div class="flex justify-between text-[10px] text-slate-400 font-bold tracking-wider">
+                        <input type="range" id="rangeViews" min="1000" max="10000000" step="1000" value="1000000" aria-label="Adjust Monthly Views">
+                        <div class="flex justify-between text-[10px] text-slate-500 font-bold tracking-wider">
                             <span>1K</span>
                             <span>10M</span>
                         </div>
@@ -176,10 +213,10 @@
 
                     <div class="space-y-3">
                         <div class="flex justify-between items-center">
-                            <label class="text-sm font-semibold text-slate-700">Monthly Growth Rate (%)</label>
+                            <label for="numGrowth" class="text-sm font-semibold text-slate-700">Monthly Growth Rate (%)</label>
                             <input type="number" id="numGrowth" value="5" class="w-20 text-right text-sm font-bold text-slate-900 bg-slate-50 border border-slate-200 rounded px-2 py-1 focus:ring-2 focus:ring-primary-500 outline-none">
                         </div>
-                        <input type="range" id="rangeGrowth" min="-10" max="50" step="1" value="5">
+                        <input type="range" id="rangeGrowth" min="-10" max="50" step="1" value="5" aria-label="Adjust Growth Rate">
                         <p class="text-xs text-slate-500">Compound growth applied monthly.</p>
                     </div>
 
@@ -187,14 +224,14 @@
 
                     <div class="grid grid-cols-2 gap-6">
                         <div class="space-y-3">
-                            <label class="text-xs font-bold uppercase text-slate-500">Long Form RPM ($)</label>
+                            <label for="numLongRpm" class="text-xs font-bold uppercase text-slate-500">Long Form RPM ($)</label>
                             <input type="number" id="numLongRpm" value="4.50" step="0.1" class="w-full text-sm font-bold text-slate-900 bg-slate-50 border border-slate-200 rounded px-3 py-2 focus:ring-2 focus:ring-primary-500 outline-none">
-                            <input type="range" id="rangeLongRpm" min="0.1" max="50" step="0.1" value="4.50">
+                            <input type="range" id="rangeLongRpm" min="0.1" max="50" step="0.1" value="4.50" aria-label="Adjust Long Form RPM">
                         </div>
                         <div class="space-y-3">
-                            <label class="text-xs font-bold uppercase text-slate-500">Shorts RPM ($)</label>
+                            <label for="numShortRpm" class="text-xs font-bold uppercase text-slate-500">Shorts RPM ($)</label>
                             <input type="number" id="numShortRpm" value="0.06" step="0.01" class="w-full text-sm font-bold text-slate-900 bg-slate-50 border border-slate-200 rounded px-3 py-2 focus:ring-2 focus:ring-primary-500 outline-none">
-                            <input type="range" id="rangeShortRpm" min="0.01" max="2.00" step="0.01" value="0.06">
+                            <input type="range" id="rangeShortRpm" min="0.01" max="2.00" step="0.01" value="0.06" aria-label="Adjust Shorts RPM">
                         </div>
                     </div>
 
@@ -202,11 +239,11 @@
 
                     <div class="space-y-3">
                         <div class="flex justify-between items-center">
-                            <label class="text-sm font-semibold text-slate-700">Shorts vs Long Form</label>
+                            <label for="rangeMix" class="text-sm font-semibold text-slate-700">Shorts vs Long Form</label>
                             <span class="text-sm font-bold text-primary-600" id="mixLabel">25% Shorts</span>
                         </div>
-                        <input type="range" id="rangeMix" min="0" max="100" step="5" value="25">
-                        <div class="flex justify-between text-[10px] text-slate-400">
+                        <input type="range" id="rangeMix" min="0" max="100" step="5" value="25" aria-label="Adjust content mix percentage">
+                        <div class="flex justify-between text-[10px] text-slate-500">
                             <span>All Long Form</span>
                             <span>All Shorts</span>
                         </div>
@@ -214,55 +251,55 @@
 
                     <div class="bg-primary-50 rounded-xl p-4 flex items-center justify-between border border-primary-100">
                         <div>
-                            <span class="text-sm font-bold text-primary-900 block">Q4 Seasonality Boost</span>
-                            <span class="text-xs text-primary-600">Simulate higher earnings in Nov/Dec</span>
+                            <span class="text-sm font-bold text-primary-900 block" id="seasonality-label">Q4 Seasonality Boost</span>
+                            <span class="text-xs text-primary-700">Simulate higher earnings in Nov/Dec</span>
                         </div>
                         <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" id="checkSeasonality" class="sr-only peer">
-                            <div class="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+                            <input type="checkbox" id="checkSeasonality" class="sr-only peer" aria-labelledby="seasonality-label">
+                            <div class="w-11 h-6 bg-slate-300 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
                         </label>
                     </div>
-                </div>
+                </section>
             </div>
 
             <div class="lg:col-span-7 flex flex-col gap-6 lg:h-screen lg:sticky lg:top-6 lg:overflow-y-auto lg:pb-20 no-scrollbar" id="printableArea">
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="bg-white p-6 rounded-2xl card-shadow border-l-4 border-l-primary-500 relative overflow-hidden">
+                    <section class="bg-white p-6 rounded-2xl card-shadow border-l-4 border-l-primary-500 relative overflow-hidden">
                         <div class="absolute right-0 top-0 p-4 opacity-5">
-                            <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 20 20"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
+                            <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
                         </div>
                         <p class="text-sm font-bold text-slate-500 uppercase tracking-wide">Projected Monthly</p>
                         <h3 class="text-4xl font-extrabold text-slate-900 mt-2 tracking-tight" id="dispMonthly">$0</h3>
                         <div class="mt-3 flex items-center gap-2">
-                            <span class="bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded-md">Current Run Rate</span>
+                            <span class="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded-md">Current Run Rate</span>
                         </div>
-                    </div>
+                    </section>
 
-                    <div class="bg-white p-6 rounded-2xl card-shadow border-l-4 border-l-indigo-500 relative overflow-hidden">
+                    <section class="bg-white p-6 rounded-2xl card-shadow border-l-4 border-l-indigo-500 relative overflow-hidden">
                          <div class="absolute right-0 top-0 p-4 opacity-5">
-                            <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 15.293 6.293A1 1 0 0117 6.707V10h-2V7z" clip-rule="evenodd"></path></svg>
+                            <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 15.293 6.293A1 1 0 0117 6.707V10h-2V7z" clip-rule="evenodd"></path></svg>
                         </div>
                         <p class="text-sm font-bold text-slate-500 uppercase tracking-wide">Next 12 Months Total</p>
                         <h3 class="text-4xl font-extrabold gradient-text mt-2 tracking-tight" id="dispYearly">$0</h3>
                         <div class="mt-3 text-xs text-slate-500">
                             Includes compound growth & seasonality
                         </div>
-                    </div>
+                    </section>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div class="lg:col-span-2 bg-white p-6 rounded-2xl card-shadow flex flex-col min-h-[350px]">
+                    <section class="lg:col-span-2 bg-white p-6 rounded-2xl card-shadow flex flex-col min-h-[350px]">
                         <h4 class="text-base font-bold text-slate-900 mb-4">Revenue Trajectory</h4>
                         <div class="flex-1 w-full relative">
-                            <canvas id="mainChart"></canvas>
+                            <canvas id="mainChart" aria-label="Line chart showing projected revenue over 12 months" role="img"></canvas>
                         </div>
-                    </div>
+                    </section>
                     
-                    <div class="lg:col-span-1 bg-white p-6 rounded-2xl card-shadow flex flex-col">
+                    <section class="lg:col-span-1 bg-white p-6 rounded-2xl card-shadow flex flex-col">
                         <h4 class="text-base font-bold text-slate-900 mb-4">Revenue Split</h4>
                         <div class="relative h-40 w-full mb-6">
-                            <canvas id="donutChart"></canvas>
+                            <canvas id="donutChart" aria-label="Donut chart showing split between Shorts and Long Form revenue" role="img"></canvas>
                         </div>
                         <div class="space-y-4 mt-auto">
                             <div class="flex justify-between items-center border-b border-slate-100 pb-2">
@@ -280,12 +317,12 @@
                                 <span class="text-sm font-bold text-slate-900" id="dispShortSplit">$0</span>
                             </div>
                         </div>
-                    </div>
+                    </section>
                 </div>
 
                 <div class="bg-slate-900 text-white p-6 rounded-2xl shadow-xl flex items-start gap-4">
                     <div class="bg-white/10 p-3 rounded-full shrink-0">
-                        <svg class="w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        <svg class="w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                     </div>
                     <div>
                         <h4 class="font-bold text-white text-sm uppercase tracking-wide mb-1">Hitoolo Analysis</h4>
@@ -354,7 +391,7 @@
                 }
 
                 // RPM is per 1000 views
-   const revLong = (longViews / 1000) * (state.longRpm * cur.rate) * booster;
+                const revLong = (longViews / 1000) * (state.longRpm * cur.rate) * booster;
                 const revShort = (shortViews / 1000) * (state.shortRpm * cur.rate) * booster;
                 const total = revLong + revShort;
 
@@ -417,6 +454,12 @@
 
         // --- CHARTS ---
         function initCharts() {
+            // Check if Chart is loaded (since we deferred it)
+            if (typeof Chart === 'undefined') {
+                setTimeout(initCharts, 100);
+                return;
+            }
+
             Chart.defaults.font.family = 'Plus Jakarta Sans';
             Chart.defaults.color = '#64748b';
 
@@ -473,9 +516,14 @@
                     plugins: { legend: { display: false } }
                 }
             });
+
+            // Trigger initial update after charts exist
+            updateUI();
         }
 
         function updateCharts(data) {
+            if(!mainChart || !donutChart) return;
+            
             mainChart.data.labels = data.history.map(d => d.label);
             mainChart.data.datasets[0].data = data.history.map(d => d.total);
             mainChart.update();
@@ -596,7 +644,7 @@
         window.addEventListener('DOMContentLoaded', () => {
             initCharts();
             setupListeners();
-            updateUI();
+            // Note: updateUI is called inside initCharts now to ensure data is ready
         });
 
     </script>
